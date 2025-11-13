@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scopri la tua destinazione🎁</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #fff;
+    }
+    #container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    #player {
+      width: 100%;
+      height: 100%;
+    }
+    #start-btn {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 80%;
+      max-width: 320px;
+      padding: 1rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #ffcc00;
+      color: #000;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    #start-btn:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="player"></div>
+    <button id="start-btn">🎁 Clicca qui per aprire il tuo regalo e scoprire la destinazione patatina.</button>
+  </div>
+
+  <!-- API di YouTube -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        videoId: 'UDDtak9U4Lc', // ID del tuo video
+        playerVars: {
+          autoplay: 0,
+          start: 16,
+          rel: 0,
+          controls: 1,
+          playsinline: 0
+        }
+      });
+    }
+
+    async function goFullscreenAndPlay() {
+      const container = document.getElementById('container');
+      const btn = document.getElementById('start-btn');
+
+      btn.style.display = 'none';
+
+      try {
+        if (container.requestFullscreen) {
+          await container.requestFullscreen();
+        } else if (container.webkitRequestFullscreen) {
+          container.webkitRequestFullscreen();
+        } else if (container.msRequestFullscreen) {
+          container.msRequestFullscreen();
+        }
+      } catch (e) {
+        console.warn('Fullscreen non concesso:', e);
+      }
+
+      if (player && player.playVideo) {
+        player.playVideo();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('start-btn');
+      btn.addEventListener('click', goFullscreenAndPlay);
+    });
+  </script>
+</body>
+</html>
