@@ -32,7 +32,7 @@
     #player {
       width: 100%;
       height: 100%;
-      display: none !important;
+      display: none;          /* <-- NIENTE !important */
     }
 
     /* Pulsante grande, tondo e centrato */
@@ -90,8 +90,13 @@
       // Nasconde il pulsante
       btn.style.display = 'none';
 
-      // Mostra il player
+      // Mostra il player e lo fa occupare tutto
       playerEl.style.display = 'block';
+      playerEl.style.position = 'absolute';
+      playerEl.style.top = '0';
+      playerEl.style.left = '0';
+      playerEl.style.width = '100%';
+      playerEl.style.height = '100%';
 
       // Richiesta fullscreen
       try {
